@@ -213,9 +213,12 @@ Modern Kubernetes incidents generate large volumes of operational signals.
 <img width="1904" height="346" alt="model-loading" src="https://github.com/user-attachments/assets/4183c6f5-6483-4a38-8c98-a7127a028bd7" />
 
 ### Agent Sandbox logs (agent-pool-xxxx)
-<img width="1144" height="328" alt="agent-pool-logs" src="https://github.com/user-attachments/assets/e4e3a199-cc86-48cb-bfe3-74b522a12ce2" />
-<img width="655" height="284" alt="agent-pool-logs2" src="https://github.com/user-attachments/assets/9eee297a-0684-4563-bd5a-799704433b6c" />
+loading model
 <img width="1915" height="765" alt="agent-pool-logs3" src="https://github.com/user-attachments/assets/19ea6a76-1b1f-4e6d-a90c-76d2abf9494b" />
+collect investigation and send request to ollama
+<img width="655" height="284" alt="agent-pool-logs2" src="https://github.com/user-attachments/assets/9eee297a-0684-4563-bd5a-799704433b6c" />
+recieve diagnostics and write to cm
+<img width="1144" height="328" alt="agent-pool-logs" src="https://github.com/user-attachments/assets/e4e3a199-cc86-48cb-bfe3-74b522a12ce2" />
 
 ### AI controller logs (ai-controller deployment)
 <img width="782" height="359" alt="ai-controller-logs" src="https://github.com/user-attachments/assets/56a8eb35-8194-4599-97b2-eb26017e7611" />
