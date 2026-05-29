@@ -1,0 +1,10 @@
+{
+  "describe": "Pod Name: crashloop-demo\nNamespace: demo-pods\nNode: agent-sandbox-dev-control-plane\nPhase: Running\n\n=== Container Statuses ===\nContainer: broken-container\nReady: false\nRestart Count: 87\nCurrent State: Waiting\nReason: CrashLoopBackOff\nMessage: back-off 5m0s restarting failed container=broken-container pod=crashloop-demo_demo-pods(152359d2-5701-4e30-a820-17da2aaa9801)\n\n--- Last Termination ---\nExit Code: 1\nReason: Error\nFinished At: 2026-05-21 19:20:27 +0000 UTC\n\n\n=== Conditions ===\nInitialized = True\nReady = False\nContainersReady = False\nPodScheduled = True\n",
+  "diagnosis": "1. **Probable Root Cause:** Container application exited with a non-zero exit code (1), indicating an initialization failure, missing resource, or environment configuration error.\n2. **Confidence Level:** 95% (Evidence: 87 restarts, `CrashLoopBackOff`, and Exit Code 1).\n3. **Next Step:** Inspect container logs (`kubectl logs`) to retrieve the specific error stack trace for the failed process.",
+  "events": "Warning BackOff Back-off restarting failed container broken-container in pod crashloop-demo_demo-pods(152359d2-5701-4e30-a820-17da2aaa9801)\n",
+  "logs": "Starting...\n",
+  "namespace": "demo-pods",
+  "podName": "crashloop-demo",
+  "reason": "CrashLoopBackOff",
+  "timestamp": "2026-05-21 19:31:45.921028262 +0000 UTC m=+461.343951869"
+}

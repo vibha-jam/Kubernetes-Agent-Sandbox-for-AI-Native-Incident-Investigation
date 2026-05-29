@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crashloop-demo
+  namespace: demo-pods
+spec:
+  containers:
+    - name: broken-container
+      image: busybox
+      command: ["/bin/sh", "-c", "echo Starting... && exit 1"]

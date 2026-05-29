@@ -1,0 +1,10 @@
+{
+  "describe": "Container exits immediately",
+  "diagnosis": "1. **Probable Root Cause:** Application crash during startup, likely due to missing configuration, environment variables, or dependency errors.\n2. **Confidence Level:** 85%\n3. **Next Step:** Retrieve specific pod logs to access the panic stack trace and identify the exact initialization failure point.",
+  "events": "Back-off restarting failed container",
+  "logs": "panic: startup failed",
+  "namespace": "default",
+  "podName": "test-pod",
+  "reason": "CrashLoopBackOff",
+  "timestamp": "2026-05-19 18:29:17.851702158 +0000 UTC m=+191.981801248"
+}

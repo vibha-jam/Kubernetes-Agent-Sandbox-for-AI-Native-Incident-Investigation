@@ -1,0 +1,80 @@
+apiVersion: extensions.agents.x-k8s.io/v1alpha1
+kind: SandboxTemplate
+metadata:
+  name: agent-template
+spec:
+  podTemplate:
+    metadata:
+      labels:
+        app: my-active-agent
+    spec:
+      runtimeClassName: gvisor 
+
+      serviceAccountName: agent-manager-sa 
+      automountServiceAccountToken: true
+
+      dnsPolicy: ClusterFirst
+
+      containers:
+      - name: agent
+        image: ai-sandbox-agent:v1 
+        ports:
+        - containerPort: 8080
+
+        volumeMounts:
+        - name: investigation-history
+          mountPath: /workspace/history
+        - name: k8s-token
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount # Manually force-mount the token where client-go looks for it
+          readOnly: true
+
+        env:
+        - name: KUBERNETES_SERVICE_HOST
+          value: "10.96.0.1" # configure based on svc kubernetes ClusterIP
+        - name: KUBERNETES_SERVICE_PORT
+          value: "443"
+
+      volumes:
+      - name: investigation-history
+        persistentVolumeClaim:
+          claimName: investigation-history-pvc
+      - name: k8s-token
+        projected:
+          sources:
+          - serviceAccountToken:
+              path: token
+              expirationSeconds: 3600
+              # removing audience as replaced the HOST with ClusterIP instead of HOSTNAME
+              # audience: https://kubernetes.default.svc
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+              - key: ca.crt
+                path: ca.crt
+          - downwardAPI:
+              items:
+              - path: namespace
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+---
+apiVersion: extensions.agents.x-k8s.io/v1alpha1
+kind: SandboxWarmPool
+metadata:
+  name: agent-pool
+spec:
+  replicas: 1
+  sandboxTemplateRef:
+    name: agent-template
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: investigation-history-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

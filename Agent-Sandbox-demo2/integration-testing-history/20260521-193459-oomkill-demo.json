@@ -1,0 +1,10 @@
+{
+  "describe": "Pod Name: oomkill-demo\nNamespace: demo-pods\nNode: agent-sandbox-dev-control-plane\nPhase: Running\n\n=== Container Statuses ===\nContainer: memory-hog\nReady: false\nRestart Count: 89\nCurrent State: Waiting\nReason: CrashLoopBackOff\nMessage: back-off 5m0s restarting failed container=memory-hog pod=oomkill-demo_demo-pods(25aa76e2-07d4-4195-8d43-ac5aab964de4)\n\n--- Last Termination ---\nExit Code: 1\nReason: OOMKilled\nFinished At: 2026-05-21 19:30:59 +0000 UTC\n\n\n=== Conditions ===\nInitialized = True\nReady = False\nContainersReady = False\nPodScheduled = True\n",
+  "diagnosis": "1. **Probable root cause:** The `polinux/stress` workload exceeded memory limits, triggering the Kubernetes OOM Killer to terminate the `memory-hog` container.\n\n2. **Confidence level:** High (Evidence: `OOMKilled` reason, `Exit Code: 1`, and `Restart Count: 89`).\n\n3. **Suggested next debugging step:** Verify the `oomkill-demo` Pod's memory limits (limits/requests) and ensure the node has sufficient memory pressure to prevent the `OOM` trigger.",
+  "events": "Normal Pulling Pulling image \"polinux/stress\"\nWarning BackOff Back-off restarting failed container memory-hog in pod oomkill-demo_demo-pods(25aa76e2-07d4-4195-8d43-ac5aab964de4)\n",
+  "logs": "stress: info: [1] dispatching hogs: 0 cpu, 0 io, 1 vm, 0 hdd\nstress: FAIL: [1] (415) \u003c-- worker 10 got signal 9\nstress: WARN: [1] (417) now reaping child worker processes\nstress: FAIL: [1] (421) kill error: No such process\nstress: FAIL: [1] (451) failed run completed in 0s\n",
+  "namespace": "demo-pods",
+  "podName": "oomkill-demo",
+  "reason": "CrashLoopBackOff",
+  "timestamp": "2026-05-21 19:34:59.996102308 +0000 UTC m=+671.571889446"
+}
